@@ -1,0 +1,214 @@
+/* General Styling */
+body {
+    background-color: #121212;
+    color: #f0f0f0;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Hero Section */
+.profile-hero {
+    position: relative;
+    text-align: center;
+    background: linear-gradient(145deg, #1b1b1b, #111);
+    padding: 120px 20px;
+    border-bottom: 3px solid #333;
+    overflow: hidden;
+    color: #f0f0f0;
+}
+
+/* Moving Lines Animation */
+.profile-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 200%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        135deg,
+        rgba(0, 200, 255, 0.1),
+        rgba(0, 200, 255, 0.1) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    transform: translateX(-50%) rotate(45deg);
+    animation: moveLines 8s linear infinite;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+@keyframes moveLines {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 200px 200px;
+    }
+}
+
+/* Hero Title */
+.profile-hero h1 {
+    font-size: 3.5rem;
+    color: #9ed8ff; 
+    margin-bottom: 20px;
+    font-weight: bold;
+    animation: fadeIn 1s ease-in-out;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 10px rgba(158, 216, 255, 0.6), 0 0 5px rgba(158, 216, 255, 0.4);
+}
+
+/* Hero Subtitle */
+.profile-hero p {
+    font-size: 1.2rem;
+    color: #bbb;
+    animation: fadeIn 1.2s ease-in-out;
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: auto;
+    line-height: 1.8;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Buttons in Hero Section */
+.profile-hero .mc-button {
+    padding: 12px 30px;
+    background-color: #3c6382;
+    color: #ffffff;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.profile-hero .mc-button:hover {
+    background-color: #4a7493;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 150, 200, 0.5);
+}
+
+/* Profile Card */
+.profile-card {
+    background-color: #222;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 200, 255, 0.5), 0 0 15px rgba(0, 200, 255, 0.3);
+}
+
+.profile-details h2 {
+    color: #00bcd4;
+    margin-bottom: 20px;
+}
+
+.profile-details p {
+    color: #bbb;
+    margin: 10px 0;
+}
+
+/* Change Password Section */
+.change-password {
+    background-color: #222;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.change-password h2 {
+    color: #00bcd4;
+    margin-bottom: 20px;
+}
+
+.password-form .form-group {
+    margin-bottom: 15px;
+}
+
+.password-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #bbb;
+}
+
+.password-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 10px;
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+.password-form input:focus {
+    border-color: #00bcd4;
+    outline: none;
+}
+
+.password-form .mc-button {
+    margin-top: 10px;
+    padding: 12px 20px;
+    width: 100%;
+}
+
+/* General Button Styles */
+.mc-button {
+    background-color: #0088a9;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    padding: 5px;
+}
+
+.mc-button:hover {
+    background-color: rgb(3, 103, 131);
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+    transform: translateY(-3px);
+}
+
+.logout-btn {
+    padding: 5px;
+    background-color: #dc3545;
+}
+
+.logout-btn:hover {
+    background-color: #b52a38;
+}
+
+/* Animation: Fade-In */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

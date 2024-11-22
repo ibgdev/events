@@ -1,0 +1,242 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #f0f0f0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Hero Section: Black Theme with Effects */
+.intro {
+    background: linear-gradient(135deg, #1d1d1d, #000);
+    text-align: center;
+    padding: 150px 20px 120px 20px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid #444;
+}
+
+/* Add glowing border effect */
+.intro::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
+    background: radial-gradient(circle, rgba(0, 200, 255, 0.1), transparent);
+    z-index: 0;
+    animation: glowEffect 10s infinite;
+}
+
+/* Keyframes for glowing animation */
+@keyframes glowEffect {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.intro h1 {
+    font-size: 3.5rem;
+    color: #00bcd4; 
+    margin-bottom: 20px;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+.intro p {
+    font-size: 1.2rem;
+    color: #bbb;
+    margin-bottom: 30px;
+    line-height: 1.8;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+    animation: fadeInDown 1.2s ease-in-out;
+}
+
+/* Button with glowing hover effect */
+.intro .mc-button {
+    padding: 12px 30px;
+    background-color: #0088a9; 
+    color: #fff;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+}
+
+.intro .mc-button:hover {
+    background-color: rgb(3, 103, 131);
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.8);
+}
+
+/* Animation for text fade-in */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* events */
+.events {
+    padding: 40px 10%;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.up{
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.event-card {
+    background-color: #222;
+    max-width: 500px;
+    width: 450px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+/* Add glow and shadow effect on hover */
+.event-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 200, 255, 0.5), 0 0 15px rgba(0, 200, 255, 0.3);
+}
+
+/* Border glow on hover */
+.event-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 200, 255, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.event-card:hover::before {
+    opacity: 1;
+}
+
+.event-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-card-content {
+    padding: 20px;
+}
+
+.event-card-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #f0f0f0;
+}
+
+.event-card-content p {
+    font-size: 0.9rem;
+    color: #bbb;
+}
+
+.event-card-content a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #00bcd4;
+    color: #121212;
+    text-decoration: none;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.event-card-content a:hover {
+    background-color: #0088a9;
+    transform: scale(1.1);
+}
+
+/* Footer */
+footer {
+    background-color: #121212;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    /* Make event items stack vertically on smaller screens */
+    .event-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Adjust event card size for smaller screens */
+    .event {
+        width: 100%;
+        max-width: 350px;
+        margin-bottom: 20px;
+    }
+
+    /* Adjust heading size in intro */
+    .intro h1 {
+        font-size: 2.5rem;
+    }
+
+    /* Adjust text size in intro */
+    .intro p {
+        font-size: 1rem;
+    }
+
+    /* Adjust button size in intro */
+    .mc-button {
+        padding: 10px 25px;
+    }
+
+    /* Adjust events section heading size */
+    .events h2 {
+        font-size: 2rem;
+    }
+}

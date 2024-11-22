@@ -1,0 +1,294 @@
+/* Basic reset for margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Dark theme base with a touch of vibrant accent colors */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #181818;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+.dark-theme {
+    background-color: #181818;
+}
+
+/* Sidebar Styles with vibrant hover effects */
+.sidebar {
+    width: 250px;
+    background-color: #2C2C2C;
+    padding-top: 20px;
+    position: fixed;
+    height: 100%;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar .logo {
+    display: flex;
+    justify-content: center;
+}
+img {
+    width: 50px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+.sidebar ul li a {
+    color: #e0e0e0;
+    text-decoration: none;
+    display: block;
+    font-size: 18px;
+    padding: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.sidebar ul li a:hover, .sidebar ul li a.active {
+    background-color: #0088a9;  /* Vibrant blue color on hover */
+    color: #fff;
+    transform: scale(1.05);
+    border-radius: 0px 10px 0px 10px;
+}
+
+/* Sidebar active link effect */
+.sidebar ul li a.active::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 100%;
+    background-color: #fff;
+}
+
+/* Main content area */
+.content {
+    margin-left: 250px;
+    padding: 30px;
+    background: linear-gradient(135deg, #525252, #2a2a2a);
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.806);
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 4rem;
+    text-align: center;
+}
+
+/* Section visibility and transitions */
+.section {
+    display: none;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.section.active {
+    display: block;
+}
+
+/* Animations for Section */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+table th {
+    background-color: #0088a9;  /* Vibrant blue color */
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+table td {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    transition: background-color 0.3s ease;
+}
+
+table tr:hover td {
+    background-color: #333;
+}
+
+table tr:nth-child(even) td {
+    background-color: #333;
+}
+
+/* Buttons with smooth hover effects */
+.delete {
+    padding: 10px 20px;
+    background-color: #FF6347;  /* Vibrant tomato color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete:hover {
+    background-color: #FF4500;  /* A deeper orange-red */
+    transform: scale(1.05);
+}
+
+.delete:focus {
+    outline: none;
+    box-shadow: 0 0 5px #FF6347;
+}
+
+.edit {
+    padding: 10px 20px;
+    background-color: #0088a9;  /* Vibrant blue color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit:hover {
+    background-color: #006882;  /* A deeper blue */
+    transform: scale(1.05);
+}
+
+.edit:focus {
+    outline: none;
+    box-shadow: 0 0 5px #0088a9;
+}
+
+/* Tables on hover */
+table th, table td {
+    border-radius: 8px;
+}
+
+table tr:hover td {
+    background-color: #5e5e5e;
+}
+
+/* Adjustments for small screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}
+
+/* Add New Event Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #2a2a2a;  /* Dark background for forms */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+form label {
+    font-size: 14px;
+    color: #fff;
+}
+
+form input,
+form select {
+    padding: 12px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #333;
+    color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus, form select:focus {
+    border-color: #0088a9;
+    outline: none;
+}
+
+form button {
+    padding: 12px;
+    border: none;
+    background-color: #0088a9;  /* Vibrant blue color */
+    color: #fff;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #006882;  /* A deeper blue */
+}
+
+/* Link to Add New Event */
+.link-to-events {
+    display: inline-block;
+    padding: 10px;
+    background-color: #0088a9;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.link-to-events:hover {
+    background-color: #006882;  /* Hover effect for link */
+}
+
+/* Button Style for Cancel or Close (if any) */
+button.cancel, button.close {
+    padding: 12px 20px;
+    background-color: #f44336;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button.cancel:hover, button.close:hover {
+    background-color: #d32f2f;
+}
