@@ -1,0 +1,124 @@
+/* Theme Variables */
+:root {
+    --background-color: #f9f9f9;
+    --text-color: #333;
+    --sidebar-color: #0088a9;
+    --link-color: #ffffff;
+    --link-hover-color: #f0f0f0;
+    --active-link-color: #0088a9;
+    --divider-color: #e0e0e0;
+    --content-bg-color: linear-gradient(135deg, #ffffff, #f0f0f0);
+    --table-border-color: #e0e0e0;
+    --table-hover-color: #eaeaea;
+    --table-alt-row-color: #f2f2f2;
+    --delete-bg-color: #FF6347;
+    --edit-bg-color: #0088a9;
+    --input-border-color: #ddd;
+}
+
+/* Dark Theme Variables */
+body.dark-theme {
+    --background-color: #181818;
+    --text-color: #fff;
+    --sidebar-color: #2C2C2C;
+    --link-color: #e0e0e0;
+    --link-hover-color: #333;
+    --active-link-color: #fff;
+    --divider-color: #444;
+    --content-bg-color: linear-gradient(135deg, #525252, #2a2a2a);
+    --table-border-color: #444;
+    --table-hover-color: #333;
+    --table-alt-row-color: #333;
+    --delete-bg-color: #FF6347;
+    --edit-bg-color: #0088a9;
+    --input-border-color: #444;
+}
+
+/* Apply Theme Variables */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.sidebar {
+    background-color: var(--sidebar-color);
+    color: var(--link-color);
+    border-right: 1px solid var(--divider-color);
+}
+
+.sidebar a {
+    color: var(--link-color);
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    color: var(--link-hover-color);
+    background-color: var(--active-link-color);
+}
+
+/* Content */
+.content {
+    background: var(--content-bg-color);
+    border: 1px solid var(--divider-color);
+}
+
+/* Tables */
+.table {
+    border: 1px solid var(--table-border-color);
+}
+
+.table tr:hover td {
+    background-color: var(--table-hover-color);
+}
+
+.table tr:nth-child(even) {
+    background-color: var(--table-alt-row-color);
+}
+
+/* Form */
+form input {
+    border: 1px solid var(--input-border-color);
+}
+
+/* Toggle Switch */
+.switch {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.switch input {
+    display: none;
+}
+
+.switch .slider {
+    width: 50px;
+    height: 25px;
+    background: var(--divider-color);
+    border-radius: 50px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.switch .slider:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: var(--background-color);
+    border-radius: 50%;
+    position: absolute;
+    top: 2.5px;
+    left: 2.5px;
+    transition: all 0.3s ease;
+}
+
+.switch input:checked + .slider {
+    background: var(--link-color);
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(25px);
+}

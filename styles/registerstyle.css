@@ -1,0 +1,187 @@
+/* General Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(145deg, #f4f4f4, #e0e0e0); /* Matching login background */
+    overflow: hidden;
+    position: relative;
+    color: #333; /* Dark text for readability */
+    animation: backgroundAnimation 10s ease infinite;
+}
+
+@keyframes backgroundAnimation {
+    0% {
+        background: linear-gradient(145deg, #f4f4f4, #e0e0e0);
+    }
+    25% {
+        background: linear-gradient(145deg, #e0e0e0, #f4f4f4);
+    }
+    50% {
+        background: linear-gradient(145deg, #f4f4f4, #e0e0e0);
+    }
+    75% {
+        background: linear-gradient(145deg, #e0e0e0, #f4f4f4);
+    }
+    100% {
+        background: linear-gradient(145deg, #f4f4f4, #e0e0e0);
+    }
+}
+
+/* Register Section*/
+.register-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; 
+    padding: 40px;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.85); /* Light background matching the login section */
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    z-index: 1;
+}
+
+/* Logo */
+.register-logo {
+    flex: 1;
+    text-align: center;
+}
+
+.logo-image {
+    width: 150px; 
+    max-height: 150px; 
+    object-fit: contain;
+}
+
+/* Form Container */
+.register-form-container {
+    flex: 2;
+    max-width: 500px; 
+    text-align: center;
+}
+
+/* Form Heading */
+.register-form-container h2 {
+    font-size: 2rem;
+    color: #494949; /* Main accent color from login */
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Form Layout - Two Columns */
+.register-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* Form Labels */
+.register-form label {
+    display: block;
+    margin-top: 8px;
+    font-size: 1rem;
+    color: #494949; /* Darker text for contrast */
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+/* Form Inputs */
+.register-form input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(235, 235, 235, 0.9); /* Light input background matching the login */
+    color: #333; /* Dark text for input */
+    font-size: 1rem;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-form input:focus {
+    outline: none;
+    background: #fff; /* Focus state background */
+    box-shadow: 0 0 5px #494949; /* Accent color on focus */
+}
+
+/* Register Button */
+.register-button {
+    width: 90%;
+    padding: 14px;
+    background: linear-gradient(135deg, #494949, #636363); /* Main button color */
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.register-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(65, 65, 65, 0.5); /* Hover effect with light shadow */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .register-section {
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+    }
+
+    .register-form-container {
+        max-width: 100%;
+        padding: 30px;
+    }
+
+    .register-logo {
+        margin-bottom: 20px;
+    }
+
+    .register-form .form-row {
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* Success and Error Messages */
+.success-message {
+    color: #28a745;
+    background-color: #d4edda;
+    border: 1px solid #28a745;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    text-align: center;
+    width: 100%; 
+}
+
+.error-message {
+    color: #ff4d4d;
+    background-color: #ffe6e6; 
+    border: 1px solid #ff4d4d; 
+    padding: 10px 15px; 
+    border-radius: 5px; 
+    margin-bottom: 15px;
+    font-size: 14px; 
+    text-align: center;
+    width: 100%; 
+}

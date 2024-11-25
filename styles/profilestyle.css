@@ -1,0 +1,311 @@
+/* General Styling */
+body {
+    background-color: #f9f9f9;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Profile Container */
+.profile-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Hero Section */
+.profile-hero {
+    position: relative;
+    text-align: center;
+    background: linear-gradient(145deg, #7ec8f1, #c2e9fb); /* Darker blue gradient with light blue */
+    padding: 120px 20px;
+    border-bottom: 3px solid #d0d0d0;
+    overflow: hidden;
+    color: #fff;
+    animation: fadeInUp 1.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hero Title */
+.profile-hero h1 {
+    font-size: 3.5rem;
+    color: #ffffff; /* White title color */
+    margin-bottom: 20px;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    animation: slideInFromLeft 1s ease-out;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Hero Subtitle */
+.profile-hero p {
+    font-size: 1.2rem;
+    color: #fff;
+    max-width: 800px;
+    margin: auto;
+    line-height: 1.8;
+    animation: fadeInUp 1.2s ease-in-out;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Profile Card */
+.profile-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 150, 200, 0.3);
+}
+
+.profile-details h2 {
+    color: #0088a9;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-details p {
+    color: #666;
+    margin: 10px 0;
+}
+
+/* Change Password Section */
+.change-password {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 40px;
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.change-password h2 {
+    text-align: center;
+    color: #0088a9;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+.password-form .form-group {
+    margin-bottom: 15px;
+}
+
+.password-form label {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.password-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #333;
+}
+
+.password-form input:focus {
+    border-color: #42a5f5;
+    box-shadow: 0 0 8px rgba(66, 165, 245, 0.5);
+    outline: none;
+}
+
+/* General Button Styles */
+.mc-button {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    background-color: #0088a9;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    margin: 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+}
+
+/* Hover Effect for Buttons */
+.mc-button:hover {
+    background-color: #006c8b;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 136, 169, 0.5);
+}
+
+.logout-btn {
+    padding: 5px;
+    background-color: #dc3545;
+}
+
+.logout-btn:hover {
+    background-color: #b52a38;
+}
+
+/* Success & Error Messages */
+.edit-profile-section .success-message {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.edit-profile-section .error-message {
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .edit-profile-section {
+        padding: 20px;
+    }
+
+    .edit-profile-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .edit-profile-section form input[type="submit"] {
+        font-size: 1rem;
+    }
+}
+
+/* Section Container (Edit Profile) */
+.edit-profile-section {
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: #f0f0f0;
+}
+
+/* Form Heading */
+.edit-profile-section h2 {
+    color: #0088a9;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Success & Error Messages */
+.edit-profile-section .success-message {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.edit-profile-section .error-message {
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Form Labels */
+.edit-profile-section form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+/* Form Inputs */
+.edit-profile-section form input[type="text"],
+.edit-profile-section form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Input Focus State */
+.edit-profile-section form input:focus {
+    border-color: #42a5f5;
+    box-shadow: 0 0 8px rgba(66, 165, 245, 0.5);
+    outline: none;
+}
+
+/* Submit Button */
+.edit-profile-section form input[type="submit"] {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    background-color: #0088a9;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-profile-section form input[type="submit"]:hover {
+    background-color: #006c8b;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 136, 169, 0.5);
+}
