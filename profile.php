@@ -93,8 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $_SESSION["name"]; ?> - Profile</title>
     <link rel="stylesheet" href="./styles/profilestyle.css">
-    <link rel="stylesheet" href="./styles/navstyle.css">
-    <link rel="stylesheet" href="./styles/footerstyle.css">
     <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
 </head>
 

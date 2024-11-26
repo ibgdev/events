@@ -2,6 +2,11 @@
 session_start();
 require "./services/config.php";
 
+if (isset($_SESSION["user_id"])) {
+    header("Location: index.php");
+    exit();
+}
+
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -53,8 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="./styles/loginstyle.css">
-    <link rel="stylesheet" href="./styles/navstyle.css">
-    <link rel="stylesheet" href="./styles/footerstyle.css">
     <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
 </head>
 
@@ -69,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
             <div class="login-form-container">
                 <h2>Login</h2>
-
+                
                 <?php if (!empty($error)): ?>
                     <p class="error-message"><?php echo $error; ?></p>
                 <?php endif; ?>

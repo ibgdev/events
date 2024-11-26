@@ -52,8 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Sign Up</title>
     <link rel="stylesheet" href="./styles/registerstyle.css">
     <link rel="stylesheet" href="./styles/navstyle.css">
-    <link rel="stylesheet" href="./styles/footerstyle.css">
-    <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
 </head>
 
 <body>

@@ -31,8 +31,6 @@ try {
     <title>Events</title>
     <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="./styles/eventstyle.css">
-    <link rel="stylesheet" href="./styles/navstyle.css">
-    <link rel="stylesheet" href="./styles/footerstyle.css">
 </head>
 
 <body>

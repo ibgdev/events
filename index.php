@@ -38,8 +38,6 @@ if (sizeof($events) >= 3) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Reservation</title>
     <link rel="stylesheet" href="./styles/indexstyle.css">
-    <link rel="stylesheet" href="./styles/navstyle.css">
-    <link rel="stylesheet" href="./styles/footerstyle.css">
     <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
 </head>
 
