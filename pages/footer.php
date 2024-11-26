@@ -1,14 +1,11 @@
-<!-- footer.php -->
 <link rel="stylesheet" href="./styles/footerstyle.css">
 <footer class="footer">
     <div class="footer-content">
-        <!-- Logo Section -->
         <div class="footer-logo">
             <img src="../imgs/logo.png" alt="Logo">
             <p>Your gateway to unforgettable events. Join us and experience the best!</p>
         </div>
         
-        <!-- Quick Links Section -->
         <div class="footer-links">
             <h3>Quick Links</h3>
             <ul>
@@ -19,7 +16,6 @@
             </ul>
         </div>
 
-        <!-- Social Media Icons Section -->
         <div class="footer-social">
             <h3>Follow Us</h3>
             <div class="social-icons">

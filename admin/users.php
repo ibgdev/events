@@ -2,7 +2,6 @@
 session_start();
 require "../services/config.php";
 
-// Authentication check
 if (!isset($_SESSION["user_id"]) || $_SESSION["user_id"] != 1) {
     header("Location: ../index.php");
     exit();

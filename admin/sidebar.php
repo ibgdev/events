@@ -18,7 +18,6 @@
         <li><a href="../services/logout.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
     </ul>
 
-    <!-- Theme Switch -->
     <label class="switch">
         <input type="checkbox" id="themeSwitch">
         <span class="slider round">

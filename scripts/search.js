@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let eventLocation = card.dataset.location;
             let eventDate = card.dataset.date;
 
-            // Check if each filter matches (or is empty)
             let matchesName = !name || title.includes(name);
             let matchesLocation = !location || eventLocation.includes(location);
             let matchesDate = !date || eventDate === date;
@@ -50,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Attach event listeners
     nameInput.addEventListener("input", filterEvents);
     locationInput.addEventListener("input", filterEvents);
     dateInput.addEventListener("change", filterEvents);

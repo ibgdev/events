@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
             <h1>Welcome, <?php echo $_SESSION["name"]; ?>!</h1>
             <p>Manage your profile and settings with ease.</p>
         </section>
-        <!-- Profile Details Card -->
+
         <section class="profile-card">
             <div class="profile-details">
                 <h2>Profile Information</h2>
@@ -117,7 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
             </div>
         </section>
 
-        <!-- Edit Profil Form -->
         <section class="edit-profile-section">
             <?php if ($updateSuccess): ?>
                 <p class="success-message">Profile updated successfully!</p>
@@ -148,7 +147,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
         </section>
 
 
-        <!-- Change Password Section -->
         <section class="change-password">
             <h2>Change Password</h2>
             <form action="" method="POST" class="password-form" onsubmit="return confirmPasswordChange()">
