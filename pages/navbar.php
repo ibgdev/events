@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../styles/navstyle.css">
+
 <header>
     <img class="logo" src="../imgs/logo.png" alt="GDSC Logo">
     <nav>

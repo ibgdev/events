@@ -4,6 +4,8 @@ require "./services/config.php";
 $error = '';
 $events = [];
 
+
+
 try {
     $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
     $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
@@ -35,13 +37,15 @@ if (sizeof($events) >= 3) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Reservation</title>
-    <link rel="stylesheet" href="../styles/indexstyle.css">
+    <link rel="stylesheet" href="./styles/indexstyle.css">
+    <link rel="stylesheet" href="./styles/navstyle.css">
+    <link rel="stylesheet" href="./styles/footerstyle.css">
     <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
 </head>
 
 <body>
     <nav>
-        <?php include('./pages/navbar.php'); ?>
+        <?php include(__DIR__.'/pages/navbar.php'); ?>
     </nav>
     <!-- Main Content -->
     <section class="intro">

@@ -52,7 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../styles/loginstyle.css">
+    <link rel="stylesheet" href="./styles/loginstyle.css">
+    <link rel="stylesheet" href="./styles/navstyle.css">
+    <link rel="stylesheet" href="./styles/footerstyle.css">
     <link rel="shortcut icon" href="imgs/logo.png" type="image/x-icon">
 </head>
 
