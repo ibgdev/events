@@ -1,4 +1,5 @@
 <!-- footer.php -->
+<link rel="stylesheet" href="../styles/footerstyle.css">
 <footer class="footer">
     <div class="footer-content">
         <!-- Logo Section -->
