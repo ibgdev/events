@@ -44,7 +44,6 @@ try {
         <?php include("./pages/searchbar.php") ?>
     </div>
 
-    <!-- Unified Event Cards Section -->
     <section id="event-container" class="events">
         <?php if (!empty($events)): ?>
             <?php foreach ($events as $event): ?>
