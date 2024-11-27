@@ -18,11 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $password = $_POST['password'];
 
         $SQLquery = "SELECT * FROM users WHERE email = :email";
-        $RS = $mysqlclient->prepare($SQLquery);
-        $RS->execute(["email" => $email]);
+        $res = $mysqlclient->prepare($SQLquery);
+        $res->execute(["email" => $email]);
 
-        if ($RS->rowCount() > 0) {
-            $user = $RS->fetch(PDO::FETCH_ASSOC);
+        if ($res->rowCount() > 0) {
+            $user = $res->fetch(PDO::FETCH_ASSOC);
 
             if ($password == $user["password"]) {
                 $_SESSION["user_id"] = $user["id"];
