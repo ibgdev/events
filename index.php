@@ -43,9 +43,8 @@ if (sizeof($events) >= 3) {
 
 <body>
     <nav>
-        <?php include(__DIR__.'/pages/navbar.php'); ?>
+        <?php include('/pages/navbar.php'); ?>
     </nav>
-    <!-- Main Content -->
     <section class="intro">
         <h1>Welcome to Our Event Reservation Website</h1>
         <p>Book your tickets for exciting upcoming events.</p>
@@ -53,7 +52,6 @@ if (sizeof($events) >= 3) {
         
     </section>
 
-    <!-- Upcoming Events -->
     <h1 class="up">Upcoming Events</h1>
     <section class="events">
         <?php if (!empty($events)): ?>
