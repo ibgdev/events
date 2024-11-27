@@ -7,11 +7,9 @@ if (!isset($_SESSION["user_id"])) {
     exit();
 }
 
-// Initialize variables
 $updateSuccess = false;
 $errorMessage = "";
 
-// Handle profile update form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -19,11 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
     $userId = $_SESSION["user_id"];
 
     try {
-        // Connect to the database
         $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
         $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-        // Update user details
         $updateQuery = "UPDATE users SET full_name = :name, email = :email, phone = :phone WHERE id = :userId";
         $stmt = $mysqlclient->prepare($updateQuery);
         $stmt->execute([
@@ -33,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
             ':userId' => $userId,
         ]);
 
-        // Update session data
         $_SESSION["name"] = $name;
         $_SESSION["email"] = $email;
         $_SESSION["phone"] = $phone;
@@ -44,30 +39,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
     }
 }
 
-// Handle password update form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) {
     $currentPassword = $_POST['current_password'];
     $newPassword = $_POST['new_password'];
     $confirmPassword = $_POST['confirm_password'];
     $userId = $_SESSION["user_id"];
 
-    // Validate the new password
     if ($newPassword !== $confirmPassword) {
         $errorMessage = "New password and confirmation password do not match.";
     } else {
         try {
-            // Connect to the database
             $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
             $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-            // Get the current password from the database
             $query = "SELECT password FROM users WHERE id = :userId";
             $stmt = $mysqlclient->prepare($query);
             $stmt->execute([':userId' => $userId]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user && $currentPassword === $user['password']) {
-                // Update password in the database without hashing (not secure in real-world applications)
                 $updatePasswordQuery = "UPDATE users SET password = :password WHERE id = :userId";
                 $stmt = $mysqlclient->prepare($updatePasswordQuery);
                 $stmt->execute([
@@ -121,35 +111,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
             <?php if ($updateSuccess): ?>
                 <p class="success-message">Profile updated successfully!</p>
             <?php elseif ($errorMessage): ?>
-                <p class="error-message"><?php echo htmlspecialchars($errorMessage); ?></p>
+                <p class="error-message"><?php $errorMessage; ?></p>
             <?php endif; ?>
 
-            <form action="" method="POST" onsubmit="return confirmUpdate()">
+            <form action="" method="POST">
                 <h2>Edit Profile</h2>
                 <label for="name"><strong>Name: </strong></label>
-                <input type="text" name="name" value="<?php echo htmlspecialchars($_SESSION["name"]); ?>" required>
+                <input type="text" name="name" value="<?php echo $_SESSION["name"]; ?>" required>
 
                 <label for="email"><strong>Email: </strong></label>
-                <input type="email" name="email" value="<?php echo htmlspecialchars($_SESSION["email"]); ?>" required>
+                <input type="email" name="email" value="<?php echo $_SESSION["email"]; ?>" required>
 
                 <label for="phone"><strong>Phone: </strong></label>
-                <input type="text" name="phone" value="<?php echo htmlspecialchars($_SESSION["phone"]); ?>" required>
+                <input type="text" name="phone" value="<?php echo $_SESSION["phone"]; ?>" required>
 
                 <input type="submit" value="Update">
             </form>
 
-            <script>
-                function confirmUpdate() {
-                    return confirm("Are you sure you want to update your profile?");
-                }
-            </script>
 
         </section>
 
 
         <section class="change-password">
             <h2>Change Password</h2>
-            <form action="" method="POST" class="password-form" onsubmit="return confirmPasswordChange()">
+            <form action="" method="POST" class="password-form" >
                 <div class="form-group">
                     <label for="current-password">Current Password:</label>
                     <input type="password" name="current_password" placeholder="**********" required>
@@ -164,12 +149,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
                 </div>
                 <button type="submit" class="mc-button">Update Password</button>
             </form>
-
-            <script>
-                function confirmPasswordChange() {
-                    return confirm("Are you sure you want to change your password?");
-                }
-            </script>
         </section>
     </main>
 </body>

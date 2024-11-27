@@ -43,7 +43,7 @@ if (sizeof($events) >= 3) {
 
 <body>
     <nav>
-        <?php include('/pages/navbar.php'); ?>
+        <?php include('./pages/navbar.php'); ?>
     </nav>
     <section class="intro">
         <h1>Welcome to Our Event Reservation Website</h1>
