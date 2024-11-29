@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "./services/config.php";
+require_once "./services/connect.php";
 
 if (isset($_SESSION["user_id"])) {
     header("Location: index.php");
@@ -10,42 +10,35 @@ if (isset($_SESSION["user_id"])) {
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    try {
-        $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-        $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'];
-
-        $SQLquery = "SELECT * FROM users WHERE email = :email";
-        $res = $mysqlclient->prepare($SQLquery);
-        $res->execute(["email" => $email]);
-
-        if ($res->rowCount() > 0) {
-            $user = $res->fetch(PDO::FETCH_ASSOC);
-
-            if ($password == $user["password"]) {
-                $_SESSION["user_id"] = $user["id"];
-                $_SESSION["email"] = $user["email"];
-                $_SESSION["org"] = $user["org"];
-                $_SESSION["name"] = $user["full_name"];
-                $_SESSION["phone"] = $user["phone"];
-
-                if ($user["id"] == 1) {
-                    header("Location: ./admin/dashboard.php");
-                    exit();
-                } else {
-                    header("Location: ./events.php");
-                    exit();
-                }
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'];
+    
+    $SQLquery = "SELECT * FROM users WHERE email = :email";
+    $res = $mysqlclient->prepare($SQLquery);
+    $res->execute(["email" => $email]);
+    
+    if ($res->rowCount() > 0) {
+        $user = $res->fetch(PDO::FETCH_ASSOC);
+    
+        if ($password == $user["password"]) {
+            $_SESSION["user_id"] = $user["id"];
+            $_SESSION["email"] = $user["email"];
+            $_SESSION["org"] = $user["org"];
+            $_SESSION["name"] = $user["full_name"];
+            $_SESSION["phone"] = $user["phone"];
+    
+            if ($user["id"] == 1) {
+                header("Location: ./admin/dashboard.php");
+                exit();
             } else {
-                $error = "email or password incorrect! Please try again.";
+                header("Location: ./events.php");
+                exit();
             }
         } else {
-            $error = "email or password incorrect ! Please try again.";
+            $error = "email or password incorrect! Please try again.";
         }
-    } catch (PDOException $e) {
-        $error = "Connection failed: " . $e->getMessage();
+    } else {
+        $error = "email or password incorrect ! Please try again.";
     }
 }
 ?>

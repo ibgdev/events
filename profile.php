@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "./services/config.php";
+require_once "./services/connect.php";
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: login.php");
@@ -16,27 +16,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'])) {
     $phone = $_POST['phone'];
     $userId = $_SESSION["user_id"];
 
-    try {
-        $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-        $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    $updateQuery = "UPDATE users SET full_name = :name, email = :email, phone = :phone WHERE id = :userId";
+    $stmt = $mysqlclient->prepare($updateQuery);
+    $stmt->execute([
+        ':name' => $name,
+        ':email' => $email,
+        ':phone' => $phone,
+        ':userId' => $userId,
+    ]);
 
-        $updateQuery = "UPDATE users SET full_name = :name, email = :email, phone = :phone WHERE id = :userId";
-        $stmt = $mysqlclient->prepare($updateQuery);
-        $stmt->execute([
-            ':name' => $name,
-            ':email' => $email,
-            ':phone' => $phone,
-            ':userId' => $userId,
-        ]);
+    $_SESSION["name"] = $name;
+    $_SESSION["email"] = $email;
+    $_SESSION["phone"] = $phone;
 
-        $_SESSION["name"] = $name;
-        $_SESSION["email"] = $email;
-        $_SESSION["phone"] = $phone;
-
-        $updateSuccess = true;
-    } catch (PDOException $e) {
-        $errorMessage = "Failed to update profile: " . $e->getMessage();
-    }
+    $updateSuccess = true;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) {
@@ -45,32 +38,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
     $confirmPassword = $_POST['confirm_password'];
     $userId = $_SESSION["user_id"];
 
-    if ($newPassword !== $confirmPassword) {
+    if ($newPassword != $confirmPassword) {
         $errorMessage = "New password and confirmation password do not match.";
     } else {
-        try {
-            $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-            $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-            $query = "SELECT password FROM users WHERE id = :userId";
-            $stmt = $mysqlclient->prepare($query);
-            $stmt->execute([':userId' => $userId]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $query = "SELECT password FROM users WHERE id = :userId";
+        $stmt = $mysqlclient->prepare($query);
+        $stmt->execute([':userId' => $userId]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user && $currentPassword === $user['password']) {
-                $updatePasswordQuery = "UPDATE users SET password = :password WHERE id = :userId";
-                $stmt = $mysqlclient->prepare($updatePasswordQuery);
-                $stmt->execute([
-                    ':password' => $newPassword,
-                    ':userId' => $userId,
-                ]);
+        if ($user && $currentPassword === $user['password']) {
+            $updatePasswordQuery = "UPDATE users SET password = :password WHERE id = :userId";
+            $stmt = $mysqlclient->prepare($updatePasswordQuery);
+            $stmt->execute([
+                ':password' => $newPassword,
+                ':userId' => $userId,
+            ]);
 
-                $updateSuccess = true;
-            } else {
-                $errorMessage = "Current password is incorrect.";
-            }
-        } catch (PDOException $e) {
-            $errorMessage = "Failed to update password: " . $e->getMessage();
+            $updateSuccess = true;
+        } else {
+            $errorMessage = "Current password is incorrect.";
         }
     }
 }
@@ -111,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
             <?php if ($updateSuccess): ?>
                 <p class="success-message">Profile updated successfully!</p>
             <?php elseif ($errorMessage): ?>
-                <p class="error-message"><?php $errorMessage; ?></p>
+                <p class="error-message"><?php echo $errorMessage; ?></p>
             <?php endif; ?>
 
             <form action="" method="POST">
@@ -134,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
 
         <section class="change-password">
             <h2>Change Password</h2>
-            <form action="" method="POST" class="password-form" >
+            <form action="" method="POST" class="password-form">
                 <div class="form-group">
                     <label for="current-password">Current Password:</label>
                     <input type="password" name="current_password" placeholder="**********" required>

@@ -4,46 +4,38 @@ if (isset($_SESSION["user_id"])) {
     header("Location: index.php");
     exit();
 }
-require "./services/config.php";
+require_once "./services/connect.php";
 
 $error = "";
 $success = "";
 
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    try {
-        $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-        $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    $name = $_POST['name'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
 
-        $name = $_POST['name'];
-        $phone = $_POST['phone'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $confirm_password = $_POST['confirm_password'];
+    if ($password !== $confirm_password) {
+        $error = "Passwords do not match!";
+    }else{
+        $SQLquery = "SELECT * FROM users WHERE email = :email";
+        $RS = $mysqlclient->prepare($SQLquery);
+        $RS->execute(["email" => $email]);
 
-        if ($password !== $confirm_password) {
-            $error = "Passwords do not match!";
+        if ($RS->rowCount() > 0) {
+            $error = "An account with that email already exists!";
         }else{
-            $SQLquery = "SELECT * FROM users WHERE email = :email";
-            $RS = $mysqlclient->prepare($SQLquery);
-            $RS->execute(["email" => $email]);
-
-            if ($RS->rowCount() > 0) {
-                $error = "An account with that email already exists!";
-            }else{
-                $insert = "INSERT INTO users(full_name, email, password, phone) VALUE(:full_name, :email, :password, :phone)";
-                $insert_rs = $mysqlclient->prepare($insert);
-                $insert_rs->execute([
-                    "full_name" => $name,
-                    "email" => $email,
-                    "password" => $password,
-                    "phone" => $phone
-                ]);
-                $success = "Registration successful! You can now log in.";
-            }
+            $insert = "INSERT INTO users(full_name, email, password, phone) VALUE(:full_name, :email, :password, :phone)";
+            $insert_rs = $mysqlclient->prepare($insert);
+            $insert_rs->execute([
+                "full_name" => $name,
+                "email" => $email,
+                "password" => $password,
+                "phone" => $phone
+            ]);
+            $success = "Registration successful! You can now log in.";
         }
-    } catch (PDOException $e) {
-        $error = "Connection failed: " . $e->getMessage();
     }
 }
 ?>
@@ -72,11 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <h2>Create an Account</h2>
                 
                 <?php if (!empty($success)): ?>
-                    <p class="success-message"><?php echo htmlspecialchars($success); ?></p>
+                    <p class="success-message"><?php echo $success; ?></p>
                 <?php endif; ?>
 
                 <?php if (!empty($error)): ?>
-                    <p class="error-message"><?php echo htmlspecialchars($error); ?></p>
+                    <p class="error-message"><?php echo $error; ?></p>
                 <?php endif; ?>
                 
                 <form action="" method="POST" class="register-form">

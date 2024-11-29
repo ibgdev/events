@@ -1,30 +1,22 @@
 <?php
 session_start();
-require "./services/config.php";
+require_once "./services/connect.php";
+
 $error = '';
 $events = [];
 
-
-
-try {
-    $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-    $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-
-    $SQLquery = "SELECT events.*, users.full_name AS organisateur
+$SQLquery = "SELECT events.*, users.full_name AS organisateur
                 FROM events
-        JOIN users ON events.organiser_id = users.id
-        ORDER BY date asc";
-    $RS = $mysqlclient->prepare($SQLquery);
-    $RS->execute();
+                JOIN users ON events.organiser_id = users.id
+                ORDER BY date asc";
 
-    $events = $RS->fetchAll(PDO::FETCH_ASSOC);
+$RS = $mysqlclient->prepare($SQLquery);
+$RS->execute();
 
-} catch (PDOException $e) {
-    $error = "Connection failed: " . $e->getMessage();
-}
+$events = $RS->fetchAll(PDO::FETCH_ASSOC);
 if (sizeof($events) >= 3) {
     $up = 3;
-}else{
+} else {
     $up = sizeof($events);
 }
 
@@ -49,7 +41,7 @@ if (sizeof($events) >= 3) {
         <h1>Welcome to Our Event Reservation Website</h1>
         <p>Book your tickets for exciting upcoming events.</p>
         <a href="events.php" class="mc-button">Start Booking</a>
-        
+
     </section>
 
     <h1 class="up">Upcoming Events</h1>
@@ -66,7 +58,7 @@ if (sizeof($events) >= 3) {
                         <p><strong>Date : </strong> <?php echo date("F j, Y", strtotime($events[$i]['date'])); ?></p>
                         <p><strong>Location : </strong> <?php echo $events[$i]['location']; ?></p>
                         <p><strong>Available Places : </strong> <?php echo $events[$i]['places_dispo']; ?></p>
-                        <a href="#">Reserve now</a>
+                        <a href="./reserve.php?id=<?php echo $events[$i]['id'] ?>">Reserve now</a>
                     </div>
                 </div>
             <?php endfor; ?>

@@ -1,25 +1,17 @@
 <?php
 session_start();
-require "./services/config.php";
+require_once "./services/connect.php";
 
 $error = '';
 $events = [];
 
-try {
-    $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-    $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-
-    $SQLquery = "SELECT events.*, users.full_name AS organisateur FROM events
+$SQLquery = "SELECT events.*, users.full_name AS organisateur FROM events
             JOIN users ON events.organiser_id = users.id
             ORDER BY date asc";
-    $RS = $mysqlclient->prepare($SQLquery);
-    $RS->execute();
+$RS = $mysqlclient->prepare($SQLquery);
+$RS->execute();
 
-    $events = $RS->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    $error = "Connection failed: " . $e->getMessage();
-}
+$events = $RS->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>

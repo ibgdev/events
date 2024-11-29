@@ -1,0 +1,148 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main Content */
+body {
+    background: #f4f9fc;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container for event details and form */
+.Event-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    width: 80%;
+    height: 100%;
+    margin: 20px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Image Styling */
+.image-details {
+    flex: 1;
+    max-width: 40%;
+    border-radius: 10px;
+    border: 5px #0088a9 solid;
+    transition: transform 0.3s;
+}
+
+/* Event Details */
+.Event-details {
+    flex: 1;
+    max-width: 60%;
+}
+
+.title-details {
+    color: #0088a9;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.Event-details p {
+    margin: 10px 0;
+    font-size: 1rem;
+}
+
+.Event-details strong {
+    color: #0088a9;
+}
+
+/* Form Styling */
+form {
+    max-width: 100%;
+    padding: 20px;
+    background: #f9fcff;
+    border: 2px solid #0088a9;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 136, 169, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+form fieldset {
+    border: none;
+    padding: 0;
+}
+
+form legend {
+    font-size: 1.5rem;
+    color: #0088a9;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Form Inputs */
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #0088a9;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="number"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="number"]:focus {
+    border-color: #0088a9;
+    box-shadow: 0 0 5px rgba(0, 136, 169, 0.5);
+    outline: none;
+}
+
+/* Submit Button */
+form input[type="submit"] {
+    background: #0088a9;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background: #006f88;
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 15px rgba(0, 136, 169, 0.4);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
