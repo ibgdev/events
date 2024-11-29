@@ -13,6 +13,7 @@ $res = $mysqlclient->prepare($SQLquery);
 $res->execute([
     "id" => $_GET['id']
 ]);
+
 $event = $res->fetch(PDO::FETCH_ASSOC);
 ?>
 

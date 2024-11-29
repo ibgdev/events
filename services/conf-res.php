@@ -3,48 +3,42 @@ session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 require '../vendor/autoload.php';
-
-// Database connection
 require_once "connect.php";
 
-// Capture form data
 $user_id = $_SESSION['user_id'];
 $event_id = $_GET['id'];
 $num_places = $_POST['nbp'];
-$reservation_date = date('Y-m-d');  // Current date
+$reservation_date = date('Y-m-d');  
 
 try {
-    // Start transaction to ensure data integrity
     $mysqlclient->beginTransaction();
 
-    // Insert reservation into the database
     $reservationQuery = "INSERT INTO reservations (user_id, event_id, num_places, reservation_date)
-                         VALUES (:user_id, :event_id, :num_places, :reservation_date)";
-    $stmt = $mysqlclient->prepare($reservationQuery);
-    $stmt->execute([
+                        VALUES (:user_id, :event_id, :num_places, :reservation_date)";
+    $res = $mysqlclient->prepare($reservationQuery);
+    $res->execute([
         'user_id' => $user_id,
         'event_id' => $event_id,
         'num_places' => $num_places,
         'reservation_date' => $reservation_date
     ]);
 
-    // Update the available places in the events table
+    // Mise a jour des places disponibles 
     $updateEventQuery = "UPDATE events SET places_dispo = places_dispo - :num_places WHERE id = :event_id";
-    $stmt = $mysqlclient->prepare($updateEventQuery);
-    $stmt->execute([
+    $res = $mysqlclient->prepare($updateEventQuery);
+    $res->execute([
         'num_places' => $num_places,
         'event_id' => $event_id
     ]);
 
-    // Fetch event name and date
-    $eventQuery = "SELECT title, date FROM events WHERE id = :id";
-    $stmt = $mysqlclient->prepare($eventQuery);
-    $stmt->execute([':id' => $event_id]);
-    $event = $stmt->fetch(PDO::FETCH_ASSOC);
-    $event_name = $event['title'];
-    $event_date = date('F j, Y', strtotime($event['date'])); // Format the event date
 
-    // Commit the transaction
+    $eventQuery = "SELECT title, date FROM events WHERE id = :id";
+    $res = $mysqlclient->prepare($eventQuery);
+    $res->execute([':id' => $event_id]);
+    $event = $res->fetch(PDO::FETCH_ASSOC);
+    $event_name = $event['title'];
+    $event_date = date('F j, Y', strtotime($event['date'])); 
+
     $mysqlclient->commit();
 
     // Send confirmation email
@@ -123,7 +117,7 @@ try {
     $mail->AltBody = 'Thank you for reserving your spot at our event. We look forward to seeing you!';
     $mail->send();
 
-    // Success message on the page with improved styling and reservation date
+    // message du succ
     echo "
     <div style='text-align: center; padding: 20px; background-color: #f0f8ff; border-radius: 8px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);'>
         <h2 style='color: #28a745;'>Reservation Confirmed!</h2>
@@ -132,7 +126,6 @@ try {
         <a href='../events' style='background-color: #0088a9; color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold;'>Return to Events</a>
     </div>";
 } catch (Exception $e) {
-    // Rollback transaction in case of error
     $mysqlclient->rollBack();
     echo "Error: {$e->getMessage()}";
 }

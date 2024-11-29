@@ -9,10 +9,10 @@
         <div class="footer-links">
             <h3>Quick Links</h3>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Events</a></li>
+                <li><a href="./index">Home</a></li>
+                <li><a href="./events.php">Events</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="#">Login</a></li>
+                <li><a href="./login.php">Login</a></li>
             </ul>
         </div>
 
