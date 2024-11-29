@@ -1,30 +1,25 @@
 <?php
 session_start();
 require "../services/config.php";
+require_once "../services/connect.php";
 
 if (!isset($_SESSION["user_id"]) || $_SESSION["org"] != 1) {
     header("Location: ../index.php");
     exit();
 }
 
-try {
-    $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-    $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-    $SQLquery_events = "SELECT * FROM events";
-    $res_events = $mysqlclient->prepare($SQLquery_events);
-    $res_events->execute();
 
-    $SQLquery_reservations = "SELECT * FROM reservations";
-    $res_reservations = $mysqlclient->prepare($SQLquery_reservations);
-    $res_reservations->execute();
+$SQLquery_events = "SELECT * FROM events";
+$res_events = $mysqlclient->prepare($SQLquery_events);
+$res_events->execute();
 
-    $SQLquery_users = "SELECT * FROM users";
-    $res_users = $mysqlclient->prepare($SQLquery_users);
-    $res_users->execute();
+$SQLquery_reservations = "SELECT * FROM reservations";
+$res_reservations = $mysqlclient->prepare($SQLquery_reservations);
+$res_reservations->execute();
 
-} catch (PDOException $e) {
-    $error = "Connection failed: " . $e->getMessage();
-}
+$SQLquery_users = "SELECT * FROM users";
+$res_users = $mysqlclient->prepare($SQLquery_users);
+$res_users->execute();
 
 ?>
 

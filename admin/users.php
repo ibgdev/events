@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../services/config.php";
+require_once "../services/connect.php";
 
 if (!isset($_SESSION["user_id"]) || $_SESSION["user_id"] != 1) {
     header("Location: ../index.php");
@@ -12,18 +13,11 @@ $users = [];
 $message = isset($_GET['message']) ? htmlspecialchars($_GET['message'], ENT_QUOTES, 'UTF-8') : '';
 $text = isset($_GET['text']) ? htmlspecialchars($_GET['text'], ENT_QUOTES, 'UTF-8') : '';
 
-try {
-    $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-    $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+$SQLquery = "SELECT * FROM users";
+$RS = $mysqlclient->prepare($SQLquery);
+$RS->execute();
+$users = $RS->fetchAll(PDO::FETCH_ASSOC);
 
-    // Fetch all users
-    $SQLquery = "SELECT * FROM users";
-    $RS = $mysqlclient->prepare($SQLquery);
-    $RS->execute();
-    $users = $RS->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    $error = "Connection failed: " . $e->getMessage();
-}
 ?>
 
 <!DOCTYPE html>

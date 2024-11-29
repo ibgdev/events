@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../services/config.php";
+require_once "../services/connect.php";
 
 if (!isset($_SESSION["user_id"]) || $_SESSION["org"] != 1) {
     header("Location: ../index.php");
@@ -9,25 +10,29 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["org"] != 1) {
 
 $reservations = [];
 $error = '';
-
-try {
-    $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-    $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-
-    // Fetching reservations along with event details and user info
+if ($_SESSION['user_id'] !== 1) {
     $SQLquery = "SELECT reservations.id, events.title AS event_title, events.date AS event_date, 
-                        events.location, users.full_name AS organiser, reservations.num_places,
-                        reservations.reservation_date, users.full_name AS reserved_by
-                FROM reservations
-                JOIN events ON reservations.event_id = events.id
-                JOIN users ON reservations.user_id = users.id
-                ORDER BY reservations.id ASC";
-    $stmt = $mysqlclient->prepare($SQLquery);
-    $stmt->execute();
-    $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    $error = "Connection failed: " . $e->getMessage();
+    events.location, users.full_name AS organiser, reservations.num_places,
+    reservations.reservation_date, users.full_name AS reserved_by
+    FROM reservations
+    JOIN events ON reservations.event_id = events.id
+JOIN users ON reservations.user_id = users.id
+    WHERE users.full_name = '{$_SESSION['name']}'
+ORDER BY reservations.id ASC";
+} else {
+    $SQLquery = "SELECT reservations.id, events.title AS event_title, events.date AS event_date, 
+    events.location, users.full_name AS organiser, reservations.num_places,
+    reservations.reservation_date, users.full_name AS reserved_by
+FROM reservations
+JOIN events ON reservations.event_id = events.id
+JOIN users ON reservations.user_id = users.id
+ORDER BY reservations.id ASC";
 }
+
+$stmt = $mysqlclient->prepare($SQLquery);
+$stmt->execute();
+$reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +58,6 @@ try {
             <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
-        <!-- Reservations Table -->
         <table class="table">
             <thead>
                 <tr>
@@ -62,22 +66,22 @@ try {
                     <th>Date</th>
                     <th>Location</th>
                     <th>Organized by</th>
-                    <th>User Reserved</th> <!-- Added this column -->
+                    <th>User Reserved</th>
                     <th>Seats Reserved</th>
-                    <th>Reservation Date</th> <!-- Added this column -->
+                    <th>Reservation Date</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (!empty($reservations)): ?>
                     <?php foreach ($reservations as $reservation): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($reservation['id']); ?></td>
-                            <td><?php echo htmlspecialchars($reservation['event_title']); ?></td>
+                            <td><?php echo $reservation['id']; ?></td>
+                            <td><?php echo $reservation['event_title']; ?></td>
                             <td><?php echo date("F j, Y", strtotime($reservation['event_date'])); ?></td>
-                            <td><?php echo htmlspecialchars($reservation['location']); ?></td>
-                            <td><?php echo htmlspecialchars($reservation['organiser']); ?></td>
-                            <td><?php echo htmlspecialchars($reservation['reserved_by']); ?></td> <!-- Displaying the reserved user -->
-                            <td><?php echo htmlspecialchars($reservation['num_places']); ?></td>
+                            <td><?php echo $reservation['location']; ?></td>
+                            <td><?php echo $reservation['organiser']; ?></td>
+                            <td><?php echo $reservation['reserved_by']; ?></td> <!-- Displaying the reserved user -->
+                            <td><?php echo $reservation['num_places']; ?></td>
                             <td><?php echo date("F j, Y", strtotime($reservation['reservation_date'])); ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -92,4 +96,5 @@ try {
 </body>
 
 <script src="scrip.js"></script>
+
 </html>

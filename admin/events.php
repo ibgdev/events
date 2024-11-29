@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "../services/config.php";
+require_once "../services/connect.php";
 
 if (!isset($_SESSION["user_id"]) || $_SESSION["org"] != 1) {
     header("Location: ../index.php");
@@ -11,60 +12,54 @@ $error = '';
 $events = [];
 $succ = '';
 
-try {
-    $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
-    $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-    if ($_SESSION['user_id'] !== 1) {
-        $SQLquery = "SELECT events.*, users.full_name AS organisateur
-        FROM events
-        JOIN users ON events.organiser_id = users.id
-        WHERE users.full_name = '{$_SESSION['name']}'
-        ORDER BY date ASC";
+if ($_SESSION['user_id'] !== 1) {
+    $SQLquery = "SELECT events.*, users.full_name AS organisateur
+    FROM events
+    JOIN users ON events.organiser_id = users.id
+    WHERE users.full_name = '{$_SESSION['name']}'
+    ORDER BY date ASC";
+} else {
+    $SQLquery = "SELECT events.*, users.full_name AS organisateur
+    FROM events
+    JOIN users ON events.organiser_id = users.id
+    ORDER BY date ASC";
+}
+
+
+$RS = $mysqlclient->prepare($SQLquery);
+$RS->execute();
+$events = $RS->fetchAll(PDO::FETCH_ASSOC);
+
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+
+    $title = $_POST['title'];
+    $type = $_POST['type'];
+    $description = $_POST['description'];
+    $date = $_POST['date'];
+    $location = $_POST['location'];
+    $places_dispo = $_POST['places_dispo'];
+    $img = $_POST['img'];
+
+    $query = "INSERT INTO events (title, type, description, date, location, places_dispo, organiser_id, img) 
+    VALUES (:title, :type, :description, :date, :location, :places_dispo, {$_SESSION['user_id']}, :img)";
+    $res = $mysqlclient->prepare($query);
+    if (
+        $res->execute([
+            "title" => $title,
+            "type" => $type,
+            "description" => $description,
+            "date" => $date,
+            "location" => $location,
+            "places_dispo" => $places_dispo,
+            "img" => $img
+        ])
+    ) {
+        $succ = "Event added succefuly";
+        $RS->execute();
+        $events = $RS->fetchAll(PDO::FETCH_ASSOC);
     } else {
-        $SQLquery = "SELECT events.*, users.full_name AS organisateur
-        FROM events
-        JOIN users ON events.organiser_id = users.id
-        ORDER BY date ASC";
+        $error = "Failed to add the event.";
     }
-
-
-    $RS = $mysqlclient->prepare($SQLquery);
-    $RS->execute();
-    $events = $RS->fetchAll(PDO::FETCH_ASSOC);
-
-    if ($_SERVER['REQUEST_METHOD'] === "POST") {
-
-        $title = $_POST['title'];
-        $type = $_POST['type'];
-        $description = $_POST['description'];
-        $date = $_POST['date'];
-        $location = $_POST['location'];
-        $places_dispo = $_POST['places_dispo'];
-        $img = $_POST['img'];
-
-        $query = "INSERT INTO events (title, type, description, date, location, places_dispo, organiser_id, img) 
-        VALUES (:title, :type, :description, :date, :location, :places_dispo, {$_SESSION['user_id']}, :img)";
-        $res = $mysqlclient->prepare($query);
-        if (
-            $res->execute([
-                "title" => $title,
-                "type" => $type,
-                "description" => $description,
-                "date" => $date,
-                "location" => $location,
-                "places_dispo" => $places_dispo,
-                "img" => $img
-            ])
-        ) {
-            $succ = "Event added succefuly";
-            $RS->execute();
-            $events = $RS->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            $error = "Failed to add the event.";
-        }
-    }
-} catch (PDOException $e) {
-    $error = "Connection failed: " . $e->getMessage();
 }
 
 if (isset($_GET['message'])) {
