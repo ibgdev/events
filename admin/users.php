@@ -9,16 +9,18 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["user_id"] != 1) {
 
 $error = '';
 $users = [];
+$message = isset($_GET['message']) ? htmlspecialchars($_GET['message'], ENT_QUOTES, 'UTF-8') : '';
+$text = isset($_GET['text']) ? htmlspecialchars($_GET['text'], ENT_QUOTES, 'UTF-8') : '';
 
 try {
     $dsn = "mysql:host=$HOST;dbname=$DB_NAME;charset=utf8";
     $mysqlclient = new PDO($dsn, $USER, $PASSWD, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
+    // Fetch all users
     $SQLquery = "SELECT * FROM users";
     $RS = $mysqlclient->prepare($SQLquery);
     $RS->execute();
     $users = $RS->fetchAll(PDO::FETCH_ASSOC);
-
 } catch (PDOException $e) {
     $error = "Connection failed: " . $e->getMessage();
 }
@@ -41,6 +43,19 @@ try {
     <?php include "sidebar.php"; ?>
     <div class="content">
         <h1>User Management</h1>
+
+        <?php if (isset($_GET['message'])): ?>
+            <div class="success-message">
+                <?php echo $_GET['message']; ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($error): ?>
+            <div class="error-message">
+                <?php echo $error; ?>
+            </div>
+        <?php endif; ?>
+
         <table class="table">
             <thead>
                 <tr>
@@ -48,7 +63,7 @@ try {
                     <th>Full Name</th>
                     <th>Email</th>
                     <th>Password</th>
-                    <th>Organizer ?</th>
+                    <th>Organizer?</th>
                     <th>Phone</th>
                     <th>Actions</th>
                 </tr>
@@ -60,18 +75,21 @@ try {
                         <td><?php echo $user['full_name']; ?></td>
                         <td><?php echo $user['email']; ?></td>
                         <td><?php echo $user['password']; ?></td>
-                        <td><?php echo ($user['org'] == 1) ? "yes" : "no"; ?></td>
+                        <td><?php echo ($user['org'] == 1) ? "Yes" : "No"; ?></td>
                         <td><?php echo $user['phone']; ?></td>
                         <td>
-                            <button class="edit">Edit</button>
-                            <button class="delete">Delete</button>
+                            <?php if($user['org'] == 0): ?>
+                                <a href="../services/setorg.php?id=<?php echo $user['id']; ?>"><button class="edit">Set Organizer</button></a>
+                                <?php else :?>
+                                    <a href="../services/delorg.php?id=<?php echo $user['id']; ?>"><button class="edit2">Remove Org</button></a>
+                            <?php endif;?>
+                            <a href="../services/deleteuser.php?id=<?php echo $user['id']; ?>"><button class="delete">Delete</button></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
-
             </tbody>
         </table>
     </div>
 </body>
-<script src="scrip.js"></script>
+<script src="script.js"></script>
 </html>
