@@ -64,7 +64,7 @@ try {
                         <td><?php echo $user['phone']; ?></td>
                         <td>
                             <button class="edit">Edit</button>
-                            <button class="delete">Deactivate</button>
+                            <button class="delete">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
