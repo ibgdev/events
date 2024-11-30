@@ -14,10 +14,10 @@ if ($_SESSION['user_id'] !== 1) {
     $SQLquery = "SELECT reservations.id, events.title AS event_title, events.date AS event_date, 
     events.location, users.full_name AS organiser, reservations.num_places,
     reservations.reservation_date, users.full_name AS reserved_by
-    FROM reservations
-    JOIN events ON reservations.event_id = events.id
+FROM reservations
+JOIN events ON reservations.event_id = events.id
 JOIN users ON reservations.user_id = users.id
-    WHERE users.full_name = '{$_SESSION['name']}'
+WHERE users.full_name = '{$_SESSION['name']}'
 ORDER BY reservations.id ASC";
 } else {
     $SQLquery = "SELECT reservations.id, events.title AS event_title, events.date AS event_date, 
@@ -80,7 +80,7 @@ $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?php echo date("F j, Y", strtotime($reservation['event_date'])); ?></td>
                             <td><?php echo $reservation['location']; ?></td>
                             <td><?php echo $reservation['organiser']; ?></td>
-                            <td><?php echo $reservation['reserved_by']; ?></td> <!-- Displaying the reserved user -->
+                            <td><?php echo $reservation['reserved_by']; ?></td> 
                             <td><?php echo $reservation['num_places']; ?></td>
                             <td><?php echo date("F j, Y", strtotime($reservation['reservation_date'])); ?></td>
                         </tr>
