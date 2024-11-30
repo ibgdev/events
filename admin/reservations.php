@@ -11,22 +11,37 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["org"] != 1) {
 $reservations = [];
 $error = '';
 if ($_SESSION['user_id'] !== 1) {
-    $SQLquery = "SELECT reservations.id, events.title AS event_title, events.date AS event_date, 
-    events.location, users.full_name AS organiser, reservations.num_places,
-    reservations.reservation_date, users.full_name AS reserved_by
+    $SQLquery = "SELECT 
+    reservations.id, 
+    events.title AS event_title, 
+    events.date AS event_date, 
+    events.location, 
+    organiser.full_name AS organiser, 
+    reservations.num_places,
+    reservations.reservation_date, 
+    reserved_by.full_name AS reserved_by
 FROM reservations
 JOIN events ON reservations.event_id = events.id
-JOIN users ON reservations.user_id = users.id
-WHERE users.full_name = '{$_SESSION['name']}'
-ORDER BY reservations.id ASC";
+JOIN users AS organiser ON events.organiser_id = organiser.id
+JOIN users AS reserved_by ON reservations.user_id = reserved_by.id
+WHERE organiser.full_name = '{$_SESSION['name']}'
+ORDER BY reservations.id ASC;";
 } else {
-    $SQLquery = "SELECT reservations.id, events.title AS event_title, events.date AS event_date, 
-    events.location, users.full_name AS organiser, reservations.num_places,
-    reservations.reservation_date, users.full_name AS reserved_by
+    $SQLquery = "SELECT 
+    reservations.id, 
+    events.title AS event_title, 
+    events.date AS event_date, 
+    events.location, 
+    organiser.full_name AS organiser, 
+    reservations.num_places,
+    reservations.reservation_date, 
+    reserved_by.full_name AS reserved_by
 FROM reservations
 JOIN events ON reservations.event_id = events.id
-JOIN users ON reservations.user_id = users.id
-ORDER BY reservations.id ASC";
+JOIN users AS organiser ON events.organiser_id = organiser.id
+JOIN users AS reserved_by ON reservations.user_id = reserved_by.id
+ORDER BY reservations.id ASC;
+";
 }
 
 $stmt = $mysqlclient->prepare($SQLquery);
