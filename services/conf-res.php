@@ -46,8 +46,8 @@ try {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'ibrahimghorbali605@gmail.com';
-    $mail->Password = 'ndpf bydd bfcr ehpi';
+    $mail->Username = '---------------------';
+    $mail->Password = '*********************';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = 465;
     $mail->setFrom('event-reservation@events.com', 'Events Reservation');
